@@ -18,7 +18,7 @@ app.mount("/assets", StaticFiles(directory=Path(BASE_DIR, "users/templates/asset
 
 @app.get("/")
 async def root():
-    return {"message": "Hello Bigger Applications!"}
+    return RedirectResponse('user/home')
 
 
 @app.exception_handler(HTTPException)
