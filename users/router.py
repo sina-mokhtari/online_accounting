@@ -1,6 +1,6 @@
 from typing import Annotated, Optional, List
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
+from fastapi import APIRouter, Depends, HTTPException, status, Response, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from starlette.routing import Route, Mount
@@ -30,9 +30,17 @@ templates = Jinja2Templates(directory=str(Path(BASE_DIR, 'templates')))
 login_required = Annotated[dict, Depends(get_current_user)]
 
 
-@router.post("/register", response_model=UserDisplay)
+@router.get("/auth/register", response_class=HTMLResponse)
+def login_get(request: Request):
+    context = {
+        "request": request,
+    }
+    return templates.TemplateResponse(request=request, name="register.html", context=context)
+
+
+@router.post("auth/register", response_model=UserDisplay)
 async def signup(
-        user: UserCreate, db: Session = Depends(get_db)
+        user: Annotated[UserCreate, Depends()], db: Session = Depends(get_db)
 ):
     if crud.get_user(db, user.username):
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="username not available")
@@ -41,7 +49,8 @@ async def signup(
 
     db_user: UserCreateDB = UserCreateDB(username=user.username, first_name=user.first_name, last_name=user.last_name,
                                          email=user.email, pass_hash=get_password_hash(user.raw_password))
-    return crud.create_user(db, db_user)
+    crud.create_user(db, db_user)
+    return RedirectResponse(url="/user/auth/login", status_code=status.HTTP_303_SEE_OTHER)
 
 
 @router.post("/token", response_model=Token)
