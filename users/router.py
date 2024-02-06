@@ -31,7 +31,7 @@ login_required = Annotated[dict, Depends(get_current_user)]
 
 
 @router.get("/auth/register", response_class=HTMLResponse)
-def login_get(request: Request):
+def signup_get(request: Request):
     context = {
         "request": request,
     }
