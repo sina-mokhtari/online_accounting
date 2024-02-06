@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr.blue-row {
+      background-color: rgb(144, 221, 238);
+    }
+
+    button {
+      padding: 5px 10px;
+      border: none;
+      background-color: #4caf99;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Bank Accounts List</h2>
+
+  <table>
+    <tr>
+      <th>Credit card number</th>
+      <th>Type of Bank Account</th>
+      <th>Main Card</th>
+    </tr>
+    <tr>
+      <td>1234 5678 9012 3456</td>
+      <td>Current account</td>
+      <td><button onclick="highlightRow(this)">Main</button></td>
+    </tr>
+    <tr>
+      <td>9876 5432 1098 7654</td>
+      <td>Checking account</td>
+      <td><button onclick="highlightRow(this)">Main</button></td>
+    </tr>
+    <tr>
+      <td>1357 2468 9753 8642</td>
+      <td>Joint account</td>
+      <td><button onclick="highlightRow(this)">Main</button></td>
+    </tr>
+  </table>
+
+  <script>
+    function highlightRow(button) {
+      var row = button.parentNode.parentNode;
+      var rows = document.getElementsByTagName('tr');
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].classList.remove('blue-row');
+      }
+      row.classList.add('blue-row');
+    }
+  </script>
+</body>
+</html>
