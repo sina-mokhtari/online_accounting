@@ -15,10 +15,9 @@ def get_user_by_email(db: Session, email: str):
 #     return db.query(models.User).offset(skip).limit(limit).all()
 
 
-def create_user(db: Session, user: schemas.UserCreate):
-    pass_hash = get_password_hash(user.raw_password)
+def create_user(db: Session, user: schemas.UserCreateDB):
     db_user = models.User(username=user.username, first_name=user.first_name, last_name=user.last_name,
-                          email=user.email, password_hash=pass_hash)
+                          email=user.email, password_hash=user.pass_hash)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

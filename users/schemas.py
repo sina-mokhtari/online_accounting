@@ -20,6 +20,10 @@ class UserCreate(UserBase):
         orm_mode = True
 
 
+class UserCreateDB(UserBase):
+    pass_hash: str
+
+
 class UserRead(UserBase):
     id: int
 

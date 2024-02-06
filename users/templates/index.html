@@ -1,158 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
 
-        <title>Online Accountanting Website</title>
+    <title>{% block title %}My Site{% endblock %}</title>
 
-        <!-- Bootstrap Core CSS -->
-        <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- MetisMenu CSS -->
-        <link href="./assets/css/metisMenu.min.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
 
-        <!-- Timeline CSS -->
-        <link href="./assets/css/timeline.css" rel="stylesheet">
+    <link href="{{ url_for('static', path='css/bootstrap.min.css') }}" rel="stylesheet">
 
-        <!-- Custom CSS -->
-        <link href="./assets/css/startmin.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="{{ url_for('static', path='css/metisMenu.min.css') }}" rel="stylesheet">
 
-        <!-- Single Page Application CSS -->
-        <link href="./assets/css/jQuerySPApp.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="{{ url_for('static', path='css/timeline.css') }}" rel="stylesheet">
 
-        <!-- Morris Charts CSS -->
-        <link href="./assets/css/morris.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', path='css/startmin.css') }}" rel="stylesheet">
 
-        <!-- Custom Fonts -->
-        <link href="./assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Single Page Application CSS -->
+    <link href="{{ url_for('static', path='css/jQuerySPApp.css') }}" rel="stylesheet">
 
-    </head>
-    <body>
+    <!-- Morris Charts CSS -->
+    <link href="{{ url_for('static', path='css/morris.css') }}" rel="stylesheet">
 
-        <div id="wrapper">
+    <!-- Custom Fonts -->
+    <link href="{{ url_for('static', path='css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">Accountanting</a>
-                </div>
+</head>
+<body>
 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+<div id="wrapper">
 
-                <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
-                </ul>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i> Profile <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#" onclick="doLogout()" href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            </li>
-                        </ul>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Accountanting</a>
+        </div>
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav navbar-nav navbar-left navbar-top-links">
+            <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
+        </ul>
+        {% if user %}
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i> {{user.first_name}} <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                </li>
+                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="{{ url_for('logout_get') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
+            </ul>
+        </li>
+        {% else %}
+        <a href="{{ url_for('login_get') }}">
+            Login
+        </a>
+        {% endif %}
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+
+                    <li>
+                        <a href="#products"><i class="fa fa-table fa-fw"></i> Products</a>
                     </li>
+                    <li>
+                        <a href="#employees"><i class="fa fa-table fa-fw"></i> Employees</a>
+                    </li>
+                    <li>
+                        <a href="#orders"><i class="fa fa-table fa-fw"></i> Orders</a>
+                    </li>
+                    <li>
+                        <a href="#customers"><i class="fa fa-table fa-fw"></i> Customers</a>
+                    </li>
+                    <li>
+                        <a href="#suppliers"><i class="fa fa-table fa-fw"></i> Suppliers</a>
+                    </li>
+                    <li>
+                        <a href="#admin"><i class="fa fa-table fa-fw"></i> Admin </a>
+                    </li>
+
+
                 </ul>
-                <!-- /.navbar-top-links -->
-
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
-                            <li class="sidebar-search">
-                                <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                </span>
-                                </div>
-                                <!-- /input-group -->
-                            </li>
-                            <li>
-                                <a href="#products"><i class="fa fa-table fa-fw"></i> Products</a>
-                            </li>
-                            <li>
-                                <a href="#employees"><i class="fa fa-table fa-fw"></i> Employees</a>
-                            </li>
-                            <li>
-                                <a href="#orders"><i class="fa fa-table fa-fw"></i> Orders</a>
-                            </li>
-                            <li>
-                                <a href="#customers"><i class="fa fa-table fa-fw"></i> Customers</a>
-                            </li>
-                            <li>
-                                <a href="#suppliers"><i class="fa fa-table fa-fw"></i> Suppliers</a>
-                            </li>
-                            <li>
-                                <a href="#admin"><i class="fa fa-table fa-fw"></i> Admin </a>
-                            </li>
-                            
-
-                            
-                            
-                            
-                            
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div id="page-wrapper">
-            <main id="jqueryspapp" role="main">
-              <section id="products" data-load="products.html" ></section>
-              <section id="employees" data-load="employees.html" ></section>
-              <section id="orders" data-load="orders.html" ></section>
-              <section id="customers" data-load="customers.html" ></section>
-              <section id="suppliers" data-load="suppliers.html" ></section>
-              <section id="admin" data-load="admin.html" ></section>
-            </main>
+            </div>
         </div>
+    </nav>
+    <div id="page-wrapper">
+        <div class="container">{% block content %} {% endblock %}</div>
+        <main id="jqueryspapp" role="main">
+            <section id="products" data-load="products.html"></section>
+            <section id="employees" data-load="employees.html"></section>
+            <section id="orders" data-load="orders.html"></section>
+            <section id="customers" data-load="customers.html"></section>
+            <section id="suppliers" data-load="suppliers.html"></section>
+            <section id="admin" data-load="admin.html"></section>
+        </main>
+    </div>
 
-        </div>
-        <!-- /#wrapper -->
+</div>
+<!-- /#wrapper -->
 
 
+<!-- jQuery -->
+<script src="{{ url_for('static', path='js/jquery.min.js') }}"></script>
 
-        <!-- jQuery -->
-        <script src="./assets/js/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ url_for('static', path='js/bootstrap.min.js') }}"></script>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="./assets/js/bootstrap.min.js"></script>
+<!-- Single Page Application JavaScript -->
+<script src="{{ url_for('static', path='js/jQuerySPApp.js') }}"></script>
 
-        <!-- Single Page Application JavaScript -->
-        <script src="./assets/js/jQuerySPApp.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="{{ url_for('static', path='js/metisMenu.min.js') }}"></script>
 
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="./assets/js/metisMenu.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{{ url_for('static', path='js/startmin.js') }}"></script>
 
-        <!-- Custom Theme JavaScript -->
-        <script src="./assets/js/startmin.js"></script>
 
-        <script type="text/javascript">
-          $(document).ready(function() {
-            var app = $.jQuerySPApp({defaultView  : "products"}); // initialize
-            // run app
-            app.run();
-
-          });
-
-          function doLogout(){
-              window.localStorage.clear();
-              window.location = "index.html";
-          }
-        </script>
-
-    </body>
+</body>
 </html>
